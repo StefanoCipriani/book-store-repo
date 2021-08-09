@@ -1,0 +1,20 @@
+#volumes location on windows
+\\wsl$\docker-desktop-data\version-pack-data\community\docker\volumes
+#if docker does not start
+#on powershell run in administration mode
+Enable-WindowsOptionalFeature -Online -FeatureName containers –All
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
+cd "C:\Program Files\Docker\Docker"
+./DockerCli.exe -SwitchDaemon
+#upgrade minikube
+choco upgrade  minikube
+#local environment  
+minikube start --driver=docker
+minikube start
+#alternative start
+minikube start --driver=hyperv
+minikube config set driver hyperv
+#create deployment and service
+kubectl.exe apply -f .\book-store-be-deployment.yml
+#get url for the service
+minikube service pet-foods-be-service

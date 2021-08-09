@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: book-store-be
+  profiles:
+    active: dev,mysql
+  
