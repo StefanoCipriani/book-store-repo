@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: book-store-be-container
-        image: stefanocipriani/book-store-be:0.0.1-SNAPSHOT
+        image: stefanocipriani/book-store-be:0.0.2-SNAPSHOT
         ports:
         - name: bstore-be-port
           containerPort: 7080

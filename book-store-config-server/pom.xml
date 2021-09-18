@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.book.store</groupId>
 		<artifactId>book-store-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>book-store-config-server</artifactId>
 	<name>book-store-config-server</name>

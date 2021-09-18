@@ -17,4 +17,4 @@ minikube config set driver hyperv
 #create deployment and service
 kubectl.exe apply -f .\book-store-be-deployment.yml
 #get url for the service
-minikube service pet-foods-be-service
+minikube service bstore-be-service
