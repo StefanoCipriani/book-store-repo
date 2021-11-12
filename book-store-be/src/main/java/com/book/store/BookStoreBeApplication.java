@@ -1,16 +1,17 @@
 package com.book.store;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import lombok.extern.slf4j.Slf4j;
+
 @SpringBootApplication
+@Slf4j
 public class BookStoreBeApplication{
 
-	private static final Logger log = LoggerFactory.getLogger(BookStoreBeApplication.class);
 
 	public static void main(String[] args) {
+		log.info("Applicazione in caricamento");
 		SpringApplication.run(BookStoreBeApplication.class, args);
 	}
 
