@@ -21,7 +21,7 @@ import com.book.store.service.impl.BookServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@SpringBootTest
+@SpringBootTest(classes = {BookServiceImpl.class,BookRepository.class })
 public class BookServiceTest {
 
 	@Autowired
