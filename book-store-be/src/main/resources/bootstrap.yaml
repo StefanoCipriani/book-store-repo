@@ -2,5 +2,5 @@ spring:
   application:
     name: book-store-be
   profiles:
-    active: dev,mysql
+    active: dev,mysql, docker
   

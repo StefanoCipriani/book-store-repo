@@ -30,6 +30,8 @@ public class Book {
 	private BigInteger id;
 	private String isbn;
 	private String titolo;
+	private String genere;
+	private String tipologia;
 	
 	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
 	private Set<BookAuthors> bookAuthors = new HashSet<>();

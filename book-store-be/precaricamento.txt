@@ -1,0 +1,3 @@
+#ISBN;TITOLO;;COGNOME AUTORE1;NOME AUTORE2;COGNOME AUTORE2;GENERE;TIPOLOGIA;NOME AUTORE1;NOME EDITORE;DESCRIZIONE EDITORE
+1;Il nome della Rosa;Umberto;Eco;-;-;Narrativa;Romanzo;-;-;
+2;Un amore;Dino;Buzzati;Narrativa:Romanzo;Corriere della Sera;I grandi Romanzi Italiani	

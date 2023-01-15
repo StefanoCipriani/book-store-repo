@@ -3,7 +3,6 @@ package com.book.store.service;
 import java.util.List;
 
 import com.book.store.dto.BookDto;
-import com.book.store.entity.Book;
 
 public interface BookService {
 

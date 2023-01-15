@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.book.store.dto.BookDto;
-import com.book.store.entity.Book;
 import com.book.store.service.BookService;
 
 @RestController

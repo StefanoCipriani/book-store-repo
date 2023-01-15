@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,15 +14,22 @@ import com.book.store.entity.BookAuthors;
 import com.book.store.entity.Editore;
 import com.book.store.repositories.BookRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 public class TestController {
 
 	@Autowired 
 	private BookRepository bookRepository;
 	
+	@Value("${app.docker-profile-description:variable not setted}")
+	String dockerProfile;
 	
 	@GetMapping("test")
 	public String test() { 
+		
+		log.info("docker-profile value -> {}", dockerProfile);
 		bookRepository.deleteAll();
 		Book book = new Book();
 	

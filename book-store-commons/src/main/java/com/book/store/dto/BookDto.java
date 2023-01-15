@@ -22,6 +22,8 @@ public class BookDto {
 	private String titolo;
 	private List<AuthorDto> autori;
 	private EditoreDto editore;
+	private String genere;
+	private String tipologia;
 	
 	public BookDto(Book book) {
 
