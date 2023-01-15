@@ -1,6 +1,6 @@
 package com.book.store.entity;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ public class Editore {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private BigDecimal id;
+	private BigInteger id;
 	private String nome;
 	private String descrizione;
 	@OneToMany(mappedBy="editore")

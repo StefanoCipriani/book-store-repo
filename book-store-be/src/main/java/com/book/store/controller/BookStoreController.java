@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,15 +19,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.book.store.dto.BookDto;
+import com.book.store.entity.Book;
 import com.book.store.service.BookService;
 
 @RestController
 @RequestMapping("book-store")
+@CrossOrigin
 public class BookStoreController {
 
 	private static final Logger log = LoggerFactory.getLogger(BookStoreController.class);
 
-	
+
 
 	@Autowired
 	private BookService bookService;
@@ -42,22 +45,22 @@ public class BookStoreController {
 	}
 
 	@PostMapping("books")
-	public ResponseEntity<Integer> insertBooks(@RequestBody List<BookDto> books){ 
+	public ResponseEntity<List<BookDto>> insertBooks(@RequestBody List<BookDto> books){ 
 
 		log.info(books.toString());
 		try {
-			int insertBooks = bookService.insertBooks(books);
-			return new ResponseEntity<Integer>(insertBooks, HttpStatus.OK);
+			List<BookDto> insertedBooks = bookService.insertBooks(books);
+			return new ResponseEntity<List<BookDto>>(insertedBooks, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<List<BookDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
 	}
-	
+
 	@DeleteMapping("books")
 	public ResponseEntity<Integer> deleteBook(@RequestBody BookDto book){ 	
 		log.info(book.toString());
-		
+
 		try {
 			int deleteBook = bookService.deleteBook(book);
 			return new ResponseEntity<Integer>(deleteBook, HttpStatus.OK);
@@ -65,6 +68,36 @@ public class BookStoreController {
 			return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
+	}
+
+	@DeleteMapping("books/delete-all")
+	public ResponseEntity<String> deleteAllBook() throws Exception{ 	
+		log.info("Svuoto la libreria");
+
+		List<BookDto> allBooks = bookService.findAll();
+		for (BookDto bookDto : allBooks) {
+			try {
+					bookService.deleteBook(bookDto);
+			}catch(Exception e) {
+					return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+
+		return new ResponseEntity<String>("Libreria svuotata", HttpStatus.OK);
+	}
+
+	@PutMapping("books")
+	public ResponseEntity<Integer> updateBook(@RequestBody List<BookDto> books){ 
+		log.info(books.toString());
+		for (BookDto bookDto : books) {
+			try {
+					bookService.updateBook(bookDto);
+			}catch(Exception e) {
+					return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		
+		return new ResponseEntity<Integer>(1,HttpStatus.OK);
 	}
 	
 	@PutMapping("books/{isbn}")

@@ -36,14 +36,11 @@ public class BookServiceImpl implements BookService {
 	
 	
 	@Override
-	public int insertBooks(List<BookDto> books){
-
-		
+	public List<BookDto> insertBooks(List<BookDto> books){
 		log.info(books.toString());
-		List<Book> booksEntity = mapBookDtoListToBookList(books);
-		
+		List<Book> booksEntity = mapBookDtoListToBookList(books);		
 		List<Book> saved = bookRepository.saveAll(booksEntity);
-		return saved.size();
+		return mapBookListToBookDtoList(saved);
 	}
 	
 	@Override
@@ -73,7 +70,7 @@ public class BookServiceImpl implements BookService {
 		return count;
 	}
 	
-	private List<Book> mapBookDtoListToBookList(List<BookDto> books) {
+	public List<Book> mapBookDtoListToBookList(List<BookDto> books) {
 		List<Book> booksEntity = new ArrayList<>();
 		
 		for(BookDto b : books) {
@@ -91,7 +88,7 @@ public class BookServiceImpl implements BookService {
 				autoriSet.add(autore);
 			}
 			
-			book.setAutori(autoriSet);
+			//book.setAutori(autoriSet);
 			
 			Editore editore = new Editore();
 			editore.setDescrizione(b.getEditore().getDescrizione());
@@ -100,6 +97,23 @@ public class BookServiceImpl implements BookService {
 			booksEntity.add(book);
 		}
 		return booksEntity;
+	}
+
+	public List<BookDto> mapBookListToBookDtoList(List<Book> book){
+		List<BookDto> res = new ArrayList<>();
+		
+		book.forEach( b ->{
+			BookDto bDto = new BookDto(b);
+			res.add(bDto);
+		});
+		
+		return res;
+	}
+
+	@Override
+	public int updateBook(BookDto book) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	
