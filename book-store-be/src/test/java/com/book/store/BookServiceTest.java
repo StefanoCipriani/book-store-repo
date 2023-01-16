@@ -1,60 +1,55 @@
 package com.book.store;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.book.store.dto.BookDto;
-import com.book.store.entity.Author;
 import com.book.store.entity.Book;
-import com.book.store.entity.Editore;
+import com.book.store.helper.TestHelper;
+
 import com.book.store.repositories.BookRepository;
 import com.book.store.service.impl.BookServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest(classes = {BookServiceImpl.class,BookRepository.class })
 public class BookServiceTest {
 
-	@Mock
-	private BookRepository bookRepository;
-	
-	@InjectMocks
+	@Autowired
 	private BookServiceImpl bookService;
-	
-	@Test 
-	public void findAll_Test() {
-		log.info("Performing test...");
-		Book book = new Book();
-		book.setIsbn("123");
-		book.setId(new BigDecimal(123));
-		book.setAutori(new HashSet<Author>());
-		book.setEditore(new Editore(new BigDecimal(1), "NomeEditore", "CognomeEditore", new HashSet<Book>()));
-		book.setTitolo("Titolo");
+
+	@MockBean
+	private BookRepository bookRepository;
+
+
+	@Test
+	public void test_insert_books() throws Exception{
+		log.info("Inizio test -> test_insert_books");
+
+		List<BookDto> books = new ArrayList<>();
+		Book book=null;
 		
-		List<Book> listBook = new ArrayList<>();
-		listBook.add(book);
-		
-		when(bookRepository.findAll()).thenReturn(listBook);
-		
-		try {
-			List<BookDto> findAll = bookService.findAll();
-			assertTrue(findAll.size() == 1);
-			log.info("Test succesfull...");
-		} catch (Exception e) {
-			log.error("Exception: {} {}", e.getMessage(), e);
+		for(int i=0; i<2; i++) {
+			book = TestHelper.creaLibroHelper(false, UUID.randomUUID().toString());
+			BookDto bookDto = new BookDto(book);
+			books.add(bookDto);	
 		}
-		
+
+		when(bookRepository.saveAll(bookService.mapBookDtoListToBookList(books))).thenReturn(bookService.mapBookDtoListToBookList(books));
+		List<BookDto> insertedBooks = bookService.insertBooks(books);
+		assertEquals(books.size(),insertedBooks.size());
+		log.info("Fine test -> test_insert_books");
+
 	}
 }
